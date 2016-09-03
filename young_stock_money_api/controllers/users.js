@@ -1,7 +1,8 @@
 var User = require('../models/user');
 
 module.exports = {
-  create: create
+  create: create,
+  me: me
 }
 
 function create(req, res, next) {
@@ -27,6 +28,21 @@ function create(req, res, next) {
       } else {
         err.status = 422;
       }
+      next(err);
+    });
+};
+
+function me(req, res, next) {
+  User
+    .findOne({email: req.decoded._id}).exec()
+    .then(function(user) {
+      res.json({
+        success: true,
+        message: 'Successfully retrieved user data.',
+        data: user
+      });
+    })
+    .catch(function(err) {
       next(err);
     });
 };

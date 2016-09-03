@@ -13,9 +13,9 @@ router.get('/', function(req, res, next) {
 
 
 // users resource paths:
-router.post('/users',    usersCtrl.create);
-// router.get( '/users/me', token.authenticate, usersCtrl.me);
+router.post('/users', usersCtrl.create);
+router.get( '/users/me', token.authenticate, usersCtrl.me);
 
-router.post('/token',    token.create);
+router.post('/token', token.create);
 
 module.exports = router;
