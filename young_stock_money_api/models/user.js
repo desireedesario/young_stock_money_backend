@@ -1,4 +1,4 @@
-var mongoose = require('./config/database')
+var mongoose = require('../config/database')
 
 var userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
