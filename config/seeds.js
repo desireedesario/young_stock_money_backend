@@ -7,6 +7,7 @@ var users = [
     email        : 'email@email.com',
     username     : 'user123',
     name         : 'Fake User',
+    password     : 'password',
     cash         : 50000
   }
 ]
