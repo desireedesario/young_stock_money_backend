@@ -4,7 +4,7 @@ var userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   username: { type: String, require: true, unique: true},
   name:  { type: String, required: true },
-  portfolio: [{type: Schema.Types.ObjectId, ref: "portfolioItem"}],
+  portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "PortfolioItem"}],
   cash: Number
 });
 

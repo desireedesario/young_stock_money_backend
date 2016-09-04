@@ -19,6 +19,8 @@ function create(req, res, next) {
           email: user.email,
           username: user.username,
           name: user.name,
+          portfolio: user.portfolio,
+          cash: 50000,
           id:    user._id
         }
       });
