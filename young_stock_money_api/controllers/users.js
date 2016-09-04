@@ -34,7 +34,7 @@ function create(req, res, next) {
 
 function me(req, res, next) {
   User
-    .findOne({email: req.decoded._id}).exec()
+    .findOne({id: req.decoded._id}).exec()
     .then(function(user) {
       res.json({
         success: true,
