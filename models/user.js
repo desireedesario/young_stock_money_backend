@@ -1,8 +1,8 @@
 var mongoose = require('../config/database')
 
 var userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  username: { type: String, require: true, unique: true},
+  email: { type: String, required: true },
+  username: { type: String, require: true },
   name:  { type: String, required: true },
   portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "PortfolioItem"}],
   cash: Number

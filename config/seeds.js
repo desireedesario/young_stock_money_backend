@@ -1,4 +1,4 @@
-var mongoose = require('../config/database');
+var mongoose = require('./database');
 
 var User = require ('../models/user');
 

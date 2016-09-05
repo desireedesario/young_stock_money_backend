@@ -2,11 +2,12 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var mongoose = require('./config/database');
 var env = require('dotenv').config();
-
+var io = require('socket.io');
+var debug = require('debug')('app:http');
 var routes = require('./config/routes');
 
 var app = express();

@@ -4,9 +4,10 @@
  * Module dependencies.
  */
 
+ var http = require('http');
+ var debug = require('debug')('youngStockMoneyApp:server');
+var env = require('../config/environment');
 var app = require('../server');
-var debug = require('debug')('young_stock_money:server');
-var http = require('http');
 
 /**
  * Get port from environment and store in Express.
