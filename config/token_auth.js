@@ -18,7 +18,7 @@ var jwt = require('jsonwebtoken');
     username: user.username,
     name:  user.name,
     portfolio: user.portfolio,
-    cash: 50000,
+    cash: user.cash,
     use:   'public_api'
    };
  }
