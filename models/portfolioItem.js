@@ -1,7 +1,8 @@
 var mongoose = require('../config/database')
 
 var portfolioItemSchema = mongoose.Schema({
-  stock: {type: Number, ref: "Stock"},
+  stockName: String,
+  stockTicker: String,
   shares: Number,
   purchasePrice: Number
 });

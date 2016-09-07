@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-var env = require('./environment');
-
 // Use different database URIs based on whether an env var exists.
 var dbUri = process.env.MONGODB_URI ||
             'mongodb://localhost/youngStockMoneyApp';
@@ -14,8 +12,6 @@ if (!process.env.MONGODB_URI) {
   });
 }
 
-if (!mongoose.connection._hasOpened) {
-  mongoose.connect(dbUri);
-}
+mongoose.connect(dbUri);
 
 module.exports = mongoose;

@@ -1,7 +1,7 @@
 var mongoose = require('../config/database')
 
 var stockSchema = mongoose.Schema({
-  fullName: String,
+  name: String,
   ticker: String,
   currentPrice: Number
 });

@@ -16,9 +16,22 @@ var PortfolioItem = require ('../models/PortfolioItem');
 
 var portfolioItems = [
   {
-    stock          : 1,
-    shares         : 4,
-    purchasePrice  : 236.76
+    stockName: 'Some good shit',
+    stockTicker: 'SGH',
+    shares: 3,
+    purchasePrice: 27.50
+  },
+  {
+    stockName: 'This dank shit',
+    stockTicker: 'TDS',
+    shares: 2,
+    purchasePrice: 304.82
+  },
+  {
+    stockName: 'SUPAH DANK AWESOME',
+    stockTicker: 'SDA',
+    shares: 5,
+    purchasePrice: 274.92
   }
 ]
 
