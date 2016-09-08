@@ -17,7 +17,7 @@ router.route('/portfolioitems')
   //GET all portfolio items
   .get(portItemsCtrl.index)
   //POST a portfolio item
-  .post(token.authenticate, portItemsCtrl.create);
+  .post(portItemsCtrl.create);
 
 router.route('/portfolioitems/:id')
   //SHOW one portfolio item

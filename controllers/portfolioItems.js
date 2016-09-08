@@ -13,10 +13,12 @@ function index(req, res){
 
 //create a new PortfolioItem
 function create(req, res) {
+  console.log(req.body)
+  var userId = req.body.user;
   var portfolioItem = new PortfolioItem(req.body);
 
   portfolioItem.save(function(err, savedPortItem) {
-    User.findById(req.decoded._id, function(err, user) {
+    User.findById(userId, function(err, user) {
       user.portfolio.push(savedPortItem._id);
       user.save(function(err, updatedUser) {
         res.json(savedPortItem)
