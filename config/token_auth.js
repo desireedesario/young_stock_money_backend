@@ -14,10 +14,10 @@ var jwt = require('jsonwebtoken');
  // changes to what your token looks like here.
  function extractPayload(user, options) {
    return {
+    _id: user._id,
     email: user.email,
     username: user.username,
     name:  user.name,
-    portfolio: user.portfolio,
     cash: user.cash,
     use:   'public_api'
    };
@@ -44,6 +44,7 @@ var jwt = require('jsonwebtoken');
   *     - The response body contains the token that was generated.
   */
  function create(req, res, next) {
+
    if (!req.body.email || !req.body.password) {
      var message = 'Missing required fields: email and password';
      return res.status(422).json(message);

@@ -17,17 +17,13 @@ router.route('/portfolioitems')
   //GET all portfolio items
   .get(portItemsCtrl.index)
   //POST a portfolio item
-  .post(portItemsCtrl.create);
+  .post(token.authenticate, portItemsCtrl.create);
 
 router.route('/portfolioitems/:id')
   //SHOW one portfolio item
-  .get(portItemsCtrl.show)
+  .get(token.authenticate, portItemsCtrl.show)
   .put(portItemsCtrl.update)
   .delete(portItemsCtrl.destroy);
-
-
-
-
 
 // users resource paths:
 router.post('/users', usersCtrl.create);

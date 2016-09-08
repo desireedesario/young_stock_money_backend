@@ -2,10 +2,10 @@ var mongoose = require('../config/database')
 
 var userSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  username: { type: String, require: true },
+  username: { type: String, required: true },
   name:  { type: String, required: true },
   portfolio: [{type: mongoose.Schema.Types.ObjectId, ref: "PortfolioItem"}],
-  cash: Number
+  cash: {type: Number, default: 50000}
 });
 
 // add bcrypt hashing to model (works on a password field)!

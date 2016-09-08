@@ -1,4 +1,5 @@
 var PortfolioItem = require('../models/portfolioItem');
+var User = require('../models/user');
 
 //GET all PortfolioItems
 function index(req, res){
@@ -12,17 +13,16 @@ function index(req, res){
 
 //create a new PortfolioItem
 function create(req, res) {
-  var portfolioItem = new PortfolioItem;
-  portfolioItem.stockName = req.body.stockName;
-  portfolioItem.stockTicker = req.body.stockTicker;
-  portfolioItem.shares = req.body.shares;
-  portfolioItem.purchasePrice = req.body.purchasePrice;
+  var portfolioItem = new PortfolioItem(req.body);
 
-  portfolioItem.save(function(err) {
-    if(err) res.json({msg: "You failed at making a portfolio item because" + err});
-
-    res.json(portfolioItem);
-  });
+  portfolioItem.save(function(err, savedPortItem) {
+    User.findById(req.decoded._id, function(err, user) {
+      user.portfolio.push(savedPortItem._id);
+      user.save(function(err, updatedUser) {
+        res.json(savedPortItem)
+      })
+    })
+  })
 }
 
 //SHOW a new portfolio item

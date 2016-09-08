@@ -53,19 +53,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
   });
-}
+});
 
 //allows things such as postman to send requests. basically allowing request from any domain
 function allowCors(req, res, next) {
@@ -105,17 +101,5 @@ function addFailedAuthHeader(err, req, res, next) {
   }
   next(err);
 }
-
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
-
 
 module.exports = app;

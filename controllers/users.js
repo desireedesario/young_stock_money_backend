@@ -19,7 +19,7 @@ function create(req, res, next) {
           email: user.email,
           username: user.username,
           name: user.name,
-          cash: 50000,
+          cash: user.cash,
           id:    user._id
         }
       });
@@ -35,7 +35,9 @@ function create(req, res, next) {
 
 function me(req, res, next) {
   User
-    .findOne({email: req.decoded.email}).exec()
+    .findOne({email: req.decoded.email})
+    .populate('portfolio')
+    .exec()
     .then(function(user) {
       res.json({
         success: true,
