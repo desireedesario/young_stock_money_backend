@@ -14,14 +14,21 @@ function index(req, res){
 //create a new PortfolioItem
 function create(req, res) {
   var portfolioItem = new PortfolioItem(req.body);
-
-  portfolioItem.save(function(err, savedPortItem) {
-    User.findById(req.decoded._id, function(err, user) {
-      user.portfolio.push(savedPortItem._id);
-      user.save(function(err, updatedUser) {
-        res.json(savedPortItem)
+  var totalPrice = portfolioItem.shares * portfolioItem.purchasePrice;
+  console.log('hi')
+  User.findById(req.decoded._id, function(err, user) {
+    console.log('finding user')
+    if(totalPrice <= user.cash) {
+      portfolioItem.save(function(err, savedPortItem) {
+        user.portfolio.push(savedPortItem._id);
+        user.cash = user.cash - totalPrice;
+        user.save(function(err, user) {
+          res.json(savedPortItem);
+        })
       })
-    })
+    } else {
+      res.json({message: "Go rob a bank first"})
+    }
   })
 }
 
@@ -41,26 +48,61 @@ function show(req, res) {
 var update = function(req, res) {
   var id = req.params.id;
 
-  PortfolioItem.findById(id, function(err, portfolioItem) {
-    if (err) {
-      res.send(err)
-    }
-
-    //set only shares
-    if (req.body.shares) portfolioItem.shares = req.body.shares;
-
-    //save the nw information
-    portfolioItem.save( function(err, updatedPortfolioItem) {
+  PortfolioItem.findById(id, function(err, portfolioItem){
+    portfolioItem.shares = portfolioItem.shares - req.body.sharesSold;
+    portfolioItem.save(function(err, updatedPortfolioItem) {
       if (err) {
-        res.send(err);
+        console.log("cannot do this b/c" + err)
+      } else {
+        User.findById(req.decoded._id, function(err, user) {
+          if (err){
+            console.log(err)
+          } else {
+            var cashMoney = req.body.currentPrice * req.body.sharesSold;
+            user.cash = user.cash + cashMoney;
+            user.save(function(err, updatedUser){
+              if (err) {
+                console.log(err)
+              } else {
+                updatedUser.populate('portfolio', function(err, populatedUser) {
+                  res.json(populatedUser)
+                })
+
+              }
+            })
+          }
+        })
       }
-      //log message
-      console.log("stock price updated");
-      //return new stock
-      res.json(updatedPortfolioItem)
-    });
-  });
+    })
+  })
 }
+
+  // User.findById(req.decoded._id, function(err, user) {
+  //   PortfolioItem.findById(id, function(err, portfolioItem) {
+  //     var sellPrice = portfolioItem.shares * portfolioItem.purchasePrice;
+  //     //set only shares
+  //     //req.body.shares are the shares you are selling
+  //     if (req.body.shares) req.body.shares = portfolioItem.shares - req.body.shares;
+  //     user.cash = user.cash + sellPrice;
+  //     //save the new information
+  //     user.save(function(err, user) {
+  //       res.json(user);
+  //     })
+  //     portfolioItem.save( function(err, updatedPortfolioItem) {
+  //       if (err) {
+  //         res.send(err);
+  //       }
+  //       //log message
+  //       console.log("stock price updated");
+  //       //return new stock
+  //       res.json(updatedPortfolioItem)
+  //     });
+  //   });
+  // });
+
+
+
+
 
 //DELETE (sell) a stock
 var destroy = function(req, res) {

@@ -22,7 +22,7 @@ router.route('/portfolioitems')
 router.route('/portfolioitems/:id')
   //SHOW one portfolio item
   .get(token.authenticate, portItemsCtrl.show)
-  .put(portItemsCtrl.update)
+  .put(token.authenticate, portItemsCtrl.update)
   .delete(portItemsCtrl.destroy);
 
 // users resource paths:
