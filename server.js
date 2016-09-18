@@ -9,6 +9,7 @@ var mongoose = require('./config/database');
 var io = require('socket.io');
 var debug = require('debug')('app:http');
 var routes = require('./config/routes');
+var cors = require('cors');
 
 var app = express();
 
@@ -18,10 +19,11 @@ app.set('view engine', 'ejs');
 
 //MIDDLEWARE
 // CORS (allows a separate client, like Postman, to send requests)…
-app.use(allowCors()); // See helper at bottom
+// app.use(allowCors()); // See helper at bottom
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(cors())
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -64,18 +66,18 @@ app.use(function(err, req, res, next) {
 });
 
 //allows things such as postman to send requests. basically allowing request from any domain
-function allowCors(req, res, next) {
-  res.header('Access-Control-Allow-Origin',  '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-
-  // Handle "preflight" requests.
-  if ('OPTIONS' == req.method) {
-    res.send(200);
-  } else {
-    next();
-  }
-}
+// function allowCors(req, res, next) {
+//   res.header('Access-Control-Allow-Origin',  '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+//
+//   // Handle "preflight" requests.
+//   if ('OPTIONS' == req.method) {
+//     res.send(200);
+//   } else {
+//     next();
+//   }
+// }
 
 //this is figuring out if the content is properly sent. does it have a put, patch, or delete
 function validateContentType(req, res, next) {
