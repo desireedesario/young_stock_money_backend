@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 
 //MIDDLEWARE
 // CORS (allows a separate client, like Postman, to send requests)…
-app.use(allowCors); // See helper at bottom
+app.use(allowCors()); // See helper at bottom
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
